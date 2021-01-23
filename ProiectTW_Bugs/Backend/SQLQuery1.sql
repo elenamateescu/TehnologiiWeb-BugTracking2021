@@ -1,0 +1,62 @@
+-- Creare baza de date
+
+IF (DB_ID(N'ProiectBugs') IS NULL)
+CREATE DATABASE ProiectBugs
+GO
+
+USE ProiectBugs;
+GO
+
+--Creare tabele
+IF OBJECT_ID('StatusB') IS NULL
+CREATE TABLE StatusB
+(
+	StatusID INT NOT NULL IDENTITY(1,1),
+	TextStatus NVARCHAR(100) NOT NULL
+	CONSTRAINT PK_StatusB PRIMARY KEY(StatusID)
+)
+GO
+
+IF OBJECT_ID('Utilizatori') IS NULL
+CREATE TABLE Utilizatori 
+(
+	UserID INT NOT NULL IDENTITY(1,1),
+	UserName NVARCHAR(100),
+	AdresaEmail NVARCHAR(250) NOT NULL,
+	TipUser NVARCHAR(4) NOT NULL,
+	CONSTRAINT PK_User  PRIMARY KEY(UserID)
+)
+GO
+
+IF OBJECT_ID('Bugs') IS NULL
+CREATE TABLE Bugs
+(
+		BugID INT NOT NULL IDENTITY(1,1),
+		Denumire NVARCHAR(MAX) NOT NULL,
+		StatusID INT NOT NULL,
+		DescriereBug NVARCHAR(MAX),
+		CONSTRAINT PK_BUG PRIMARY KEY (BugID)
+)
+GO
+
+IF OBJECT_ID('Istoric') IS NULL
+CREATE TABLE Istoric 
+(
+	BugID INT NOT NULL IDENTITY(1,1),
+	DataBug NVARCHAR(100) NOT NULL,
+	UserID INT NOT NULL,
+	Modificare NVARCHAR(200),
+	CONSTRAINT FK_USERID FOREIGN KEY (UserID) REFERENCES Utilizatori(UserID)
+)
+GO
+
+
+
+
+SELECT * FROM Bugs;
+
+SELECT * FROM Utilizatori;
+
+SELECT * FROM Istoric;
+
+SELECT * FROM StatusB;
